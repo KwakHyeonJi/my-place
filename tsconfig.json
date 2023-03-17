@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    /* Type Checking */
+    "strict": true,
+
+    /* Modules */
+    "module": "commonjs",
+    "baseUrl": "src",
+
+    /* Emit */
+    "declaration": true,
+    "removeComments": true,
+
+    /* JavaScript Support */
+    "allowJs": true,
+    "checkJs": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "isolatedModules": true,
+
+    /* Language and Environment */
+    "target": "es5",
+    "jsx": "react-jsx",
+
+    /* Completeness */
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}
