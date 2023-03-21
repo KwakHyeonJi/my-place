@@ -16,7 +16,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.[jt]s?(x)$/,
+        test: /\.(ts|tsx|js|jsx)$/,
         loader: 'esbuild-loader',
         options: {
           target: 'es2015',
