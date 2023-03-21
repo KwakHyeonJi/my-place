@@ -2,6 +2,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -35,7 +36,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.{png,jp?(e)g}$/,
+        test: /\.(png|jpeg|jpg|mp3)$/i,
         type: 'asset/resource',
       },
     ],
@@ -49,6 +50,9 @@ module.exports = {
       template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [{ from: './src/assets', to: './assets' }],
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
@@ -66,6 +70,7 @@ module.exports = {
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@types': path.resolve(__dirname, 'src/types'),
       '@utils': path.resolve(__dirname, 'src/utils'),
     },
   },
