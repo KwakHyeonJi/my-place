@@ -1,7 +1,13 @@
+import Gallery from '@components/Gallery';
 import MusicButton from '@components/MusicButton';
 
 const Main = () => {
-  return <MusicButton />;
+  return (
+    <>
+      <Gallery />
+      <MusicButton />
+    </>
+  );
 };
 
 export default Main;
