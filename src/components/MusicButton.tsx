@@ -1,7 +1,7 @@
 import { MdMusicNote, MdMusicOff } from 'react-icons/md';
 import styled from 'styled-components';
 
-import music from '@assets/mp3/Rinne - Precious you.mp3';
+import music from '@assets/sounds/Rinne - Precious you.mp3';
 import useAudio from '@hooks/useAudio';
 
 const MusicButtonLayout = styled.button`
