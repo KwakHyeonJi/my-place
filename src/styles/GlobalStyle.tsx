@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  body {
+    background: #fafafa;
+  }
+
   li {
     list-style: none;
   }

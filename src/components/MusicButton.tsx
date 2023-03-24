@@ -16,7 +16,7 @@ const MusicButtonLayout = styled.button`
   border-radius: 50%;
   background: ${({ theme }) => theme.color.black};
   box-shadow: -2px 6px 6px rgba(50, 50, 93, 0.5);
-  color: #fff;
+  color: ${({ theme }) => theme.color.white};
 `;
 
 const MusicButton = () => {
