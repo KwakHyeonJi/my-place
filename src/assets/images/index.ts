@@ -10,7 +10,6 @@ import image9 from './09.jpg';
 import image10 from './10.jpg';
 import image11 from './11.jpg';
 import image12 from './12.jpg';
-import image13 from './13.jpg';
 
 export default [
   image1,
@@ -25,5 +24,4 @@ export default [
   image10,
   image11,
   image12,
-  image13,
 ];
