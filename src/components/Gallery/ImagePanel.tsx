@@ -4,26 +4,28 @@ import { motion } from 'framer-motion-3d';
 import { useLayoutEffect, useRef } from 'react';
 import * as THREE from 'three';
 
+import { useAppSelecter } from '@store/store';
+
 interface ImagePanelProps {
   geometry: THREE.BufferGeometry;
   imageSrc: string;
-  type: string;
   x: number;
   y: number;
   z: number;
 }
 
-const ImagePanel = ({ geometry, imageSrc, type, x, y, z }: ImagePanelProps) => {
+const ImagePanel = ({ geometry, imageSrc, x, y, z }: ImagePanelProps) => {
+  const view = useAppSelecter((state) => state.gallery.view);
   const ref = useRef<MeshProps & THREE.Mesh>(null);
   const texture = useTexture(imageSrc);
 
   const variants = {
-    typeA: {
+    circular: {
       x,
       y,
       z,
     },
-    typeB: {
+    spread: {
       x: (Math.random() - 0.5) * 5,
       y: (Math.random() - 0.5) * 2,
       z: (Math.random() - 0.5) * 5,
@@ -46,7 +48,7 @@ const ImagePanel = ({ geometry, imageSrc, type, x, y, z }: ImagePanelProps) => {
       geometry={geometry}
       position={[x, y, z]}
       variants={variants}
-      animate={type}
+      animate={view}
       transition={{
         duration: 0.8,
       }}

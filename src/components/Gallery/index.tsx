@@ -1,6 +1,5 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useState } from 'react';
 import styled from 'styled-components';
 import * as THREE from 'three';
 
@@ -17,7 +16,6 @@ const GalleryLayout = styled.div`
 const SIZE = images.length;
 
 const Gallery = () => {
-  const [type, setType] = useState('typeA');
   const planeGeometry = new THREE.PlaneGeometry(1, 1.5);
   planeGeometry.rotateY(Math.PI);
 
@@ -45,11 +43,6 @@ const Gallery = () => {
     }
   }
 
-  const changeType = (e: React.SyntheticEvent) => {
-    const target = e.target as HTMLButtonElement;
-    target.dataset.type && setType(target.dataset.type);
-  };
-
   return (
     <GalleryLayout>
       <Canvas>
@@ -65,14 +58,13 @@ const Gallery = () => {
               key={images[i]}
               geometry={planeGeometry}
               imageSrc={images[i]}
-              type={type}
               x={positions[i].x}
               y={positions[i].y}
               z={positions[i].z}
             />
           ))}
       </Canvas>
-      <ChangeView changeType={changeType} />
+      <ChangeView />
       <ChangeRatio />
     </GalleryLayout>
   );

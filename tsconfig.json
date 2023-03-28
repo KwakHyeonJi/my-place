@@ -13,6 +13,7 @@
       "@hooks/*": ["hooks/*"],
       "@interfaces/*": ["interfaces/*"],
       "@pages/*": ["pages/*"],
+      "@store/*": ["store/*"],
       "@styles/*": ["styles/*"],
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"]

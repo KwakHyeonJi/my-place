@@ -70,6 +70,7 @@ module.exports = {
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
       '@pages': path.resolve(__dirname, 'src/pages'),
+      '@store': path.resolve(__dirname, 'src/store'),
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@types': path.resolve(__dirname, 'src/types'),
       '@utils': path.resolve(__dirname, 'src/utils'),

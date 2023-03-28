@@ -26,7 +26,7 @@ const Radio = ({ children, value, disabled }: RadioProps) => {
         checked={value === groupValue}
         onChange={onChange}
       />
-      {children}
+      <span>{children}</span>
     </label>
   );
 };
