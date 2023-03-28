@@ -55,7 +55,9 @@
     "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-expressions": "off",
     "react-hooks/exhaustive-deps": "warn",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/label-has-associated-control": ["error", {}],
+    "react/no-array-index-key": ["warn"]
   },
   "ignorePatterns": ["dist", "public", "webpack.config.js"]
 }

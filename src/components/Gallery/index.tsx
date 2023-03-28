@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import * as THREE from 'three';
 
 import images from '@assets/images';
+import ChangeRatio from '@components/Gallery/ChangeRatio';
 import ChangeView from '@components/Gallery/ChangeView';
 import ImagePanel from '@components/Gallery/ImagePanel';
 
@@ -72,6 +73,7 @@ const Gallery = () => {
           ))}
       </Canvas>
       <ChangeView changeType={changeType} />
+      <ChangeRatio />
     </GalleryLayout>
   );
 };
