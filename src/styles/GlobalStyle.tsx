@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background: #fafafa;
+    font-family: 'Poppins', sans-serif;
   }
 
   li {
@@ -25,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
   button {
     border: none;
     cursor: pointer;
+    font-family: 'Poppins', sans-serif;
   }
 `;
 
