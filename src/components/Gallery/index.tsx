@@ -7,6 +7,7 @@ import images from '@assets/images';
 import ChangeRatio from '@components/Gallery/ChangeRatio';
 import ChangeView from '@components/Gallery/ChangeView';
 import ImagePanel from '@components/Gallery/ImagePanel';
+import { useAppSelecter } from '@store/store';
 
 const GalleryLayout = styled.div`
   width: 100%;
@@ -16,10 +17,16 @@ const GalleryLayout = styled.div`
 const SIZE = images.length;
 
 const Gallery = () => {
-  const planeGeometry = new THREE.PlaneGeometry(1, 1.5);
+  const { aspectRatio, reverse } = useAppSelecter((state) => state.gallery);
+
+  const height = reverse
+    ? aspectRatio.x / aspectRatio.y
+    : aspectRatio.y / aspectRatio.x;
+
+  const planeGeometry = new THREE.PlaneGeometry(1, height);
   planeGeometry.rotateY(Math.PI);
 
-  // typeA
+  // circular
   const circleGeometry = new THREE.CircleGeometry(2.5, SIZE);
   circleGeometry.rotateX(Math.PI / 2);
   circleGeometry.rotateY(-Math.PI / 2);

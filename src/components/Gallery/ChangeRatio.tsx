@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
 import RadioGroup from '@components/common/RadioGroup';
+import { changeAspectRatio, toggleReverse } from '@store/features/gallerySlice';
+import { useAppDispatch, useAppSelecter } from '@store/store';
 
 const ChangeRatioLayout = styled.div`
   position: absolute;
@@ -12,8 +14,7 @@ const ChangeRatioLayout = styled.div`
   right: 30px;
 `;
 
-const ChangeRatioBox = styled.div<{ open: boolean }>`
-  display: ${({ open }) => (open ? 'block' : 'none')};
+const ChangeRatioBox = styled.div`
   padding: 20px 60px 20px 25px;
   border-radius: 30px;
   background: #ececec;
@@ -81,23 +82,26 @@ const ReverseButton = styled.button<{ reverse: boolean }>`
 `;
 
 const ratios = [
-  [4, 3],
-  [16, 9],
-  [21, 9],
+  [3, 4],
+  [9, 16],
+  [9, 21],
+  [1, 1],
 ];
 
 const ChangeRatio = () => {
-  const [ratioIndex, setRatioIndex] = useState(0);
-  const [reverse, setReverse] = useState(false);
-  const [open, setOpen] = useState(true);
+  const { aspectRatio, reverse } = useAppSelecter((state) => state.gallery);
+  const [open, setOpen] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const handleChangeRatio = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
-    setRatioIndex(Number(target.value));
+    const [x, y] = target.value.split(':');
+    dispatch(changeAspectRatio({ x: Number(x), y: Number(y) }));
   };
 
   const handleToggleReverse = () => {
-    setReverse(!reverse);
+    dispatch(toggleReverse());
   };
 
   const handleOpen = () => {
@@ -106,29 +110,31 @@ const ChangeRatio = () => {
 
   return (
     <ChangeRatioLayout>
-      <ChangeRatioBox open={open}>
-        <RadioGroup
-          label="Aspect ratio"
-          name="Aspect ratio"
-          value={ratioIndex}
-          onChange={handleChangeRatio}
-        >
-          {ratios.map((ratio, index) => (
-            <Radio
-              key={index}
-              value={index}
-            >{`${ratio[0]} : ${ratio[1]}`}</Radio>
-          ))}
-        </RadioGroup>
-        <ReverseButton
-          type="button"
-          reverse={reverse}
-          onClick={handleToggleReverse}
-        >
-          <MdScreenRotation size={20} />
-          Reverse
-        </ReverseButton>
-      </ChangeRatioBox>
+      {open && (
+        <ChangeRatioBox>
+          <RadioGroup
+            label="Aspect ratio"
+            name="aspect ratio"
+            value={`${aspectRatio.x}:${aspectRatio.y}`}
+            onChange={handleChangeRatio}
+          >
+            {ratios.map((ratio) => (
+              <Radio
+                key={`${ratio[0]}:${ratio[1]}`}
+                value={`${ratio[0]}:${ratio[1]}`}
+              >{`${ratio[0]} : ${ratio[1]}`}</Radio>
+            ))}
+          </RadioGroup>
+          <ReverseButton
+            type="button"
+            reverse={reverse}
+            onClick={handleToggleReverse}
+          >
+            <MdScreenRotation size={20} />
+            Reverse
+          </ReverseButton>
+        </ChangeRatioBox>
+      )}
       <ChangeRatioButton onClick={handleOpen} open={open}>
         <IoMdResize size={20} />
       </ChangeRatioButton>

@@ -4,7 +4,7 @@ interface RadioGroupProps {
   children: React.ReactNode;
   label: string;
   name: string;
-  value: string | number;
+  value: string;
   disabled?: boolean;
   onChange: (e: React.SyntheticEvent) => void;
 }

@@ -4,7 +4,7 @@ import RadioContext from '@contexts/RadioContext';
 
 interface RadioProps {
   children: string;
-  value: string | number;
+  value: string;
   disabled?: boolean;
 }
 

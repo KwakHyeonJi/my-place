@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 interface Radio {
   name: string;
-  value: string | number;
+  value: string;
   disabled?: boolean;
   onChange: (e: React.SyntheticEvent) => void;
 }

@@ -57,7 +57,8 @@
     "react-hooks/exhaustive-deps": "warn",
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/label-has-associated-control": ["error", {}],
-    "react/no-array-index-key": ["warn"]
+    "react/no-array-index-key": ["warn"],
+    "no-param-reassign": ["warn"]
   },
   "ignorePatterns": ["dist", "public", "webpack.config.js"]
 }
