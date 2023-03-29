@@ -14,7 +14,7 @@ A place where various works can be displayed in various ways
 <br />
 
 ## ⚙ Features
-- Cicular view
+- Circular view
 - Spread view
 - Change aspect ratio
 - Background music
@@ -25,6 +25,6 @@ A place where various works can be displayed in various ways
 - Grid view
 - Limit camera movement
 - Screenshot
-- Change theme color
+- Theme color
 - Lighting effects
 - ...
