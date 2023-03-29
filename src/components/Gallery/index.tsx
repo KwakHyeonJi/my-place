@@ -14,20 +14,31 @@ const GalleryLayout = styled.div`
   height: 100vh;
 `;
 
-const SIZE = images.length;
+const IMG_LENGTH = images.length; // number of images
+const MAX_WIDTH = 1.2; // plane width
+const MAX_WIDTH_REVERSE = 2.4; // plane width (reverse)
+const RADIUS = 2.5; // circle
+const GAP = 1.1; // between planes
 
 const Gallery = () => {
   const { aspectRatio, reverse } = useAppSelecter((state) => state.gallery);
+  const ratio = aspectRatio.x / aspectRatio.y;
 
-  const height = reverse
-    ? aspectRatio.x / aspectRatio.y
-    : aspectRatio.y / aspectRatio.x;
+  const planeWidth = Math.min(
+    (2 * Math.PI * RADIUS) / (IMG_LENGTH * GAP),
+    reverse ? MAX_WIDTH_REVERSE : MAX_WIDTH
+  );
 
-  const planeGeometry = new THREE.PlaneGeometry(1, height);
+  const planeGeometry = reverse
+    ? new THREE.PlaneGeometry(planeWidth * ratio, planeWidth)
+    : new THREE.PlaneGeometry(planeWidth, planeWidth / ratio);
   planeGeometry.rotateY(Math.PI);
 
-  // circular
-  const circleGeometry = new THREE.CircleGeometry(2.5, SIZE);
+  if (reverse) {
+    planeGeometry.rotateZ(Math.PI / 2);
+  }
+
+  const circleGeometry = new THREE.CircleGeometry(RADIUS, IMG_LENGTH);
   circleGeometry.rotateX(Math.PI / 2);
   circleGeometry.rotateY(-Math.PI / 2);
   const circleEdges = new THREE.EdgesGeometry(circleGeometry);
@@ -58,7 +69,7 @@ const Gallery = () => {
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
         />
-        {Array(SIZE)
+        {Array(IMG_LENGTH)
           .fill(undefined)
           .map((_, i) => (
             <ImagePanel
