@@ -11,7 +11,7 @@ import ImagePanel from '@components/Gallery/ImagePanel';
 import {
   circularPositions,
   spreadPositions,
-} from '@components/Gallery/Positions';
+} from '@components/Gallery/positions';
 import { setPositions } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
