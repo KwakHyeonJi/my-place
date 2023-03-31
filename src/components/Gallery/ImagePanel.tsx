@@ -9,26 +9,27 @@ import { useAppSelecter } from '@store/store';
 interface ImagePanelProps {
   geometry: THREE.BufferGeometry;
   imageSrc: string;
-  x: number;
-  y: number;
-  z: number;
+  imageIndex: number;
 }
 
-const ImagePanel = ({ geometry, imageSrc, x, y, z }: ImagePanelProps) => {
+const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
+  const { circular, spread } = useAppSelecter(
+    (state) => state.gallery.positions
+  );
   const view = useAppSelecter((state) => state.gallery.view);
   const ref = useRef<MeshProps & THREE.Mesh>(null);
   const texture = useTexture(imageSrc);
 
   const variants = {
     circular: {
-      x,
-      y,
-      z,
+      x: circular[imageIndex * 3],
+      y: circular[imageIndex * 3 + 1],
+      z: circular[imageIndex * 3 + 2],
     },
     spread: {
-      x: (Math.random() - 0.5) * 5,
-      y: (Math.random() - 0.5) * 2,
-      z: (Math.random() - 0.5) * 5,
+      x: spread[imageIndex * 3],
+      y: spread[imageIndex * 3 + 1],
+      z: spread[imageIndex * 3 + 2],
       rotateX: 0,
       rotateY: Math.PI,
       rotateZ: 0,
@@ -46,7 +47,7 @@ const ImagePanel = ({ geometry, imageSrc, x, y, z }: ImagePanelProps) => {
     <motion.mesh
       ref={ref}
       geometry={geometry}
-      position={[x, y, z]}
+      initial={false}
       variants={variants}
       animate={view}
       transition={{
