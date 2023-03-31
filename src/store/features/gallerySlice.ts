@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type View = 'circular' | 'spread';
 
 export interface GalleryState {
+  positions: Record<View, number[]>;
   view: View;
   aspectRatio: { x: number; y: number };
   reverse: boolean;
 }
 
 const initialState: GalleryState = {
+  positions: { circular: [], spread: [], grid: [] },
   view: 'circular',
   aspectRatio: { x: 3, y: 4 },
   reverse: false,
@@ -18,6 +19,12 @@ export const GallerySlice = createSlice({
   name: 'gallery',
   initialState,
   reducers: {
+    setPositions: (
+      state,
+      action: PayloadAction<{ view: View; positions: number[] }>
+    ) => {
+      state.positions[action.payload.view] = action.payload.positions;
+    },
     changeView: (state, action: PayloadAction<{ view: View }>) => {
       state.view = action.payload.view;
     },
@@ -35,5 +42,5 @@ export const GallerySlice = createSlice({
 });
 
 export default GallerySlice.reducer;
-export const { changeView, changeAspectRatio, toggleReverse } =
+export const { setPositions, changeView, changeAspectRatio, toggleReverse } =
   GallerySlice.actions;
