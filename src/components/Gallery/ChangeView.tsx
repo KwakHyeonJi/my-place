@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
@@ -64,4 +65,4 @@ const ChangeView = () => {
   );
 };
 
-export default ChangeView;
+export default React.memo(ChangeView);

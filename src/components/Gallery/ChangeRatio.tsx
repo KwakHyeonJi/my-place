@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IoMdResize } from 'react-icons/io';
 import { MdScreenRotation } from 'react-icons/md';
 import styled from 'styled-components';
@@ -89,7 +89,8 @@ const ratios = [
 ];
 
 const ChangeRatio = () => {
-  const { aspectRatio, reverse } = useAppSelecter((state) => state.gallery);
+  const aspectRatio = useAppSelecter((state) => state.gallery.aspectRatio);
+  const reverse = useAppSelecter((state) => state.gallery.reverse);
   const [open, setOpen] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -142,4 +143,4 @@ const ChangeRatio = () => {
   );
 };
 
-export default ChangeRatio;
+export default React.memo(ChangeRatio);
