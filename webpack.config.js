@@ -53,13 +53,13 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: './src/assets', to: './assets' }],
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false,
-      generateStatsFile: true,
-      reportFilename: 'bundle-report.html',
-      statsFilename: 'bundle-stats.json',
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   openAnalyzer: false,
+    //   generateStatsFile: true,
+    //   reportFilename: 'bundle-report.html',
+    //   statsFilename: 'bundle-stats.json',
+    // }),
   ],
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
