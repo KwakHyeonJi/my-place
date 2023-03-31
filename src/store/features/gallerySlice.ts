@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export type View = 'circular' | 'spread';
 
 export interface GalleryState {
   positions: Record<View, number[]>;
@@ -9,7 +10,7 @@ export interface GalleryState {
 }
 
 const initialState: GalleryState = {
-  positions: { circular: [], spread: [], grid: [] },
+  positions: { circular: [], spread: [] },
   view: 'circular',
   aspectRatio: { x: 3, y: 4 },
   reverse: false,
