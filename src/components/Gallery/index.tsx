@@ -48,7 +48,7 @@ const Gallery = () => {
     dispatch(
       setViewInfo({
         view: 'circular',
-        info: circularInfo(RADIUS, IMG_LENGTH),
+        info: circularInfo(IMG_LENGTH, RADIUS),
       })
     );
   }, []);
@@ -58,7 +58,7 @@ const Gallery = () => {
       dispatch(
         setViewInfo({
           view: 'spread',
-          info: spreadInfo(IMG_LENGTH),
+          info: spreadInfo(IMG_LENGTH, 5, 2, 5),
         })
       );
     }
