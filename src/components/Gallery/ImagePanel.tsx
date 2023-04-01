@@ -16,20 +16,21 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
   const { circular, spread } = useAppSelecter(
     (state) => state.gallery.positions
   );
+
   const view = useAppSelecter((state) => state.gallery.view);
   const ref = useRef<MeshProps & THREE.Mesh>(null);
   const texture = useTexture(imageSrc);
 
   const variants = {
     circular: {
-      x: circular[imageIndex * 3],
-      y: circular[imageIndex * 3 + 1],
-      z: circular[imageIndex * 3 + 2],
+      x: circular[imageIndex].x,
+      y: circular[imageIndex].y,
+      z: circular[imageIndex].z,
     },
     spread: {
-      x: spread[imageIndex * 3],
-      y: spread[imageIndex * 3 + 1],
-      z: spread[imageIndex * 3 + 2],
+      x: spread[imageIndex]?.x,
+      y: spread[imageIndex]?.y,
+      z: spread[imageIndex]?.z,
       rotateX: 0,
       rotateY: Math.PI,
       rotateZ: 0,
