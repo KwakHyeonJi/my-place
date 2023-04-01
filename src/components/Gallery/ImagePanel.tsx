@@ -1,7 +1,7 @@
 import { useTexture } from '@react-three/drei';
 import { MeshProps } from '@react-three/fiber';
 import { motion } from 'framer-motion-3d';
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 import * as THREE from 'three';
 
 import { useAppSelecter } from '@store/store';
@@ -13,44 +13,24 @@ interface ImagePanelProps {
 }
 
 const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
-  const { circular, spread } = useAppSelecter(
-    (state) => state.gallery.positions
-  );
-
   const view = useAppSelecter((state) => state.gallery.view);
+  const viewsInfo = useAppSelecter((state) => state.gallery.viewsInfo);
   const ref = useRef<MeshProps & THREE.Mesh>(null);
   const texture = useTexture(imageSrc);
-
-  const variants = {
-    circular: {
-      x: circular[imageIndex].x,
-      y: circular[imageIndex].y,
-      z: circular[imageIndex].z,
-    },
-    spread: {
-      x: spread[imageIndex]?.x,
-      y: spread[imageIndex]?.y,
-      z: spread[imageIndex]?.z,
-      rotateX: 0,
-      rotateY: Math.PI,
-      rotateZ: 0,
-    },
-  };
-
-  useLayoutEffect(() => {
-    const mesh = ref.current;
-    if (mesh) {
-      mesh.lookAt(0, 0, 0);
-    }
-  }, []);
 
   return (
     <motion.mesh
       ref={ref}
       geometry={geometry}
       initial={false}
-      variants={variants}
-      animate={view}
+      animate={{
+        x: viewsInfo[view].position[imageIndex].x,
+        y: viewsInfo[view].position[imageIndex].y,
+        z: viewsInfo[view].position[imageIndex].z,
+        rotateX: viewsInfo[view].rotation[imageIndex].x,
+        rotateY: viewsInfo[view].rotation[imageIndex].y,
+        rotateZ: viewsInfo[view].rotation[imageIndex].z,
+      }}
       transition={{
         duration: 0.8,
       }}
