@@ -8,8 +8,8 @@ import images from '@assets/images';
 import ChangeRatio from '@components/Gallery/ChangeRatio';
 import ChangeView from '@components/Gallery/ChangeView';
 import ImagePanel from '@components/Gallery/ImagePanel';
-import { circularInfo, spreadInfo } from '@components/Gallery/viewInfo';
-import { setViewInfo } from '@store/features/gallerySlice';
+import { circularPointSet, spreadPointSet } from '@components/Gallery/pointSet';
+import { setViewPointSet } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
 const GalleryLayout = styled.div`
@@ -46,9 +46,9 @@ const Gallery = () => {
 
   useEffect(() => {
     dispatch(
-      setViewInfo({
+      setViewPointSet({
         view: 'circular',
-        info: circularInfo(IMG_LENGTH, RADIUS),
+        pointSet: circularPointSet(IMG_LENGTH, RADIUS),
       })
     );
   }, []);
@@ -56,9 +56,9 @@ const Gallery = () => {
   useEffect(() => {
     if (view === 'spread') {
       dispatch(
-        setViewInfo({
+        setViewPointSet({
           view: 'spread',
-          info: spreadInfo(IMG_LENGTH, 5, 2, 5),
+          pointSet: spreadPointSet(IMG_LENGTH, 5, 2, 5),
         })
       );
     }

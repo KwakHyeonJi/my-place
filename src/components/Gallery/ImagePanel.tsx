@@ -14,7 +14,7 @@ interface ImagePanelProps {
 
 const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
   const view = useAppSelecter((state) => state.gallery.view);
-  const viewsInfo = useAppSelecter((state) => state.gallery.viewsInfo);
+  const pointSet = useAppSelecter((state) => state.gallery.viewPointSet[view]);
   const ref = useRef<MeshProps & THREE.Mesh>(null);
   const texture = useTexture(imageSrc);
 
@@ -24,12 +24,12 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
       geometry={geometry}
       initial={false}
       animate={{
-        x: viewsInfo[view].position[imageIndex].x,
-        y: viewsInfo[view].position[imageIndex].y,
-        z: viewsInfo[view].position[imageIndex].z,
-        rotateX: viewsInfo[view].rotation[imageIndex].x,
-        rotateY: viewsInfo[view].rotation[imageIndex].y,
-        rotateZ: viewsInfo[view].rotation[imageIndex].z,
+        x: pointSet.position[imageIndex].x,
+        y: pointSet.position[imageIndex].y,
+        z: pointSet.position[imageIndex].z,
+        rotateX: pointSet.rotation[imageIndex].x,
+        rotateY: pointSet.rotation[imageIndex].y,
+        rotateZ: pointSet.rotation[imageIndex].z,
       }}
       transition={{
         duration: 0.8,

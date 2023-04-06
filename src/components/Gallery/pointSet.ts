@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-import { ViewInfo } from '@store/features/gallerySlice';
+import { PointSet } from '@store/features/gallerySlice';
 
-export const circularInfo = (length: number, radius: number): ViewInfo => {
-  const info: ViewInfo = { position: [], rotation: [] };
+const circularPointSet = (length: number, radius: number): PointSet => {
+  const info: PointSet = { position: [], rotation: [] };
   const object = new THREE.Object3D();
 
   const theta = (2 * Math.PI) / length;
@@ -31,13 +31,13 @@ export const circularInfo = (length: number, radius: number): ViewInfo => {
   return info;
 };
 
-export const spreadInfo = (
+const spreadPointSet = (
   length: number,
   x: number,
   y: number,
   z: number
-): ViewInfo => {
-  const info: ViewInfo = { position: [], rotation: [] };
+): PointSet => {
+  const info: PointSet = { position: [], rotation: [] };
 
   for (let i = 0; i < length; i += 1) {
     info.position.push({
@@ -54,3 +54,5 @@ export const spreadInfo = (
 
   return info;
 };
+
+export { circularPointSet, spreadPointSet };

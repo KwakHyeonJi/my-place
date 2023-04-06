@@ -8,20 +8,20 @@ export interface Coord {
   z: number;
 }
 
-export interface ViewInfo {
+export interface PointSet {
   position: Coord[];
   rotation: Coord[];
 }
 
 export interface GalleryState {
-  viewsInfo: Record<View, ViewInfo>;
+  viewPointSet: Record<View, PointSet>;
   view: View;
   aspectRatio: { x: number; y: number };
   reverse: boolean;
 }
 
 const initialState: GalleryState = {
-  viewsInfo: {
+  viewPointSet: {
     circular: { position: [], rotation: [] },
     spread: { position: [], rotation: [] },
     grid: { position: [], rotation: [] },
@@ -35,19 +35,19 @@ export const GallerySlice = createSlice({
   name: 'gallery',
   initialState,
   reducers: {
-    setViewInfo: (
+    setViewPointSet: (
       state,
       action: PayloadAction<{
         view: View;
-        info: ViewInfo;
+        pointSet: PointSet;
       }>
     ) => {
-      state.viewsInfo[action.payload.view] = action.payload.info;
+      state.viewPointSet[action.payload.view] = action.payload.pointSet;
     },
-    changeView: (state, action: PayloadAction<{ view: View }>) => {
+    setView: (state, action: PayloadAction<{ view: View }>) => {
       state.view = action.payload.view;
     },
-    changeAspectRatio: (
+    setAspectRatio: (
       state,
       action: PayloadAction<{ x: number; y: number }>
     ) => {
@@ -61,5 +61,5 @@ export const GallerySlice = createSlice({
 });
 
 export default GallerySlice.reducer;
-export const { setViewInfo, changeView, changeAspectRatio, toggleReverse } =
+export const { setViewPointSet, setView, setAspectRatio, toggleReverse } =
   GallerySlice.actions;

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
 import RadioGroup from '@components/common/RadioGroup';
-import { changeAspectRatio, toggleReverse } from '@store/features/gallerySlice';
+import { setAspectRatio, toggleReverse } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
 const ChangeRatioLayout = styled.div`
@@ -98,7 +98,7 @@ const ChangeRatio = () => {
   const handleChangeRatio = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     const [x, y] = target.value.split(':');
-    dispatch(changeAspectRatio({ x: Number(x), y: Number(y) }));
+    dispatch(setAspectRatio({ x: Number(x), y: Number(y) }));
   };
 
   const handleToggleReverse = () => {
