@@ -36,7 +36,7 @@ const ChangeViewLayout = styled.div`
   }
 `;
 
-const views: View[] = ['circular', 'spread'];
+const views: View[] = ['circular', 'spread', 'grid'];
 
 const ChangeView = () => {
   const currentView = useAppSelecter((state) => state.gallery.view);

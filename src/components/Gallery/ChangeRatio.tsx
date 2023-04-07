@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { IoMdResize } from 'react-icons/io';
-import { MdScreenRotation } from 'react-icons/md';
 import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
 import RadioGroup from '@components/common/RadioGroup';
-import { setAspectRatio, toggleReverse } from '@store/features/gallerySlice';
+import { setAspectRatio } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
 const ChangeRatioLayout = styled.div`
@@ -67,30 +66,14 @@ const ChangeRatioButton = styled.button<{ open: boolean }>`
   transition: 0.1s ease;
 `;
 
-const ReverseButton = styled.button<{ reverse: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 15px 0 0 0;
-  padding: 5px 10px;
-  border: 1px solid #c3c3c3;
-  border-radius: 30px;
-  background: ${({ reverse, theme }) =>
-    reverse ? '#cbcbcb' : theme.color.white};
-  color: ${({ theme }) => theme.color.black};
-  transition: background 0.2s ease;
-`;
-
 const ratios = [
   [3, 4],
   [9, 16],
-  [9, 21],
   [1, 1],
 ];
 
 const ChangeRatio = () => {
   const aspectRatio = useAppSelecter((state) => state.gallery.aspectRatio);
-  const reverse = useAppSelecter((state) => state.gallery.reverse);
   const [open, setOpen] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -99,10 +82,6 @@ const ChangeRatio = () => {
     const target = e.target as HTMLInputElement;
     const [x, y] = target.value.split(':');
     dispatch(setAspectRatio({ x: Number(x), y: Number(y) }));
-  };
-
-  const handleToggleReverse = () => {
-    dispatch(toggleReverse());
   };
 
   const handleOpen = () => {
@@ -126,14 +105,6 @@ const ChangeRatio = () => {
               >{`${ratio[0]} : ${ratio[1]}`}</Radio>
             ))}
           </RadioGroup>
-          <ReverseButton
-            type="button"
-            reverse={reverse}
-            onClick={handleToggleReverse}
-          >
-            <MdScreenRotation size={20} />
-            Reverse
-          </ReverseButton>
         </ChangeRatioBox>
       )}
       <ChangeRatioButton onClick={handleOpen} open={open}>

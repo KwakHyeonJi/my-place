@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { PointSet } from '@store/features/gallerySlice';
 
 const circularPointSet = (length: number, radius: number): PointSet => {
-  const info: PointSet = { position: [], rotation: [] };
+  const pointSet: PointSet = { position: [], rotation: [] };
   const object = new THREE.Object3D();
 
   const theta = (2 * Math.PI) / length;
@@ -16,19 +16,20 @@ const circularPointSet = (length: number, radius: number): PointSet => {
       radius * Math.sin(theta * i + thetaStart)
     );
     object.lookAt(0, 0, 0);
-    info.position.push({
+    object.rotateY(Math.PI);
+    pointSet.position.push({
       x: object.position.x,
       y: object.position.y,
       z: object.position.z,
     });
-    info.rotation.push({
+    pointSet.rotation.push({
       x: object.rotation.x,
       y: object.rotation.y,
       z: object.rotation.z,
     });
   }
 
-  return info;
+  return pointSet;
 };
 
 const spreadPointSet = (
@@ -37,22 +38,56 @@ const spreadPointSet = (
   y: number,
   z: number
 ): PointSet => {
-  const info: PointSet = { position: [], rotation: [] };
+  const pointSet: PointSet = { position: [], rotation: [] };
 
   for (let i = 0; i < length; i += 1) {
-    info.position.push({
+    pointSet.position.push({
       x: (Math.random() - 0.5) * x,
       y: (Math.random() - 0.5) * y,
       z: (Math.random() - 0.5) * z,
     });
-    info.rotation.push({
+    pointSet.rotation.push({
       x: 0,
-      y: Math.PI,
+      y: 0,
       z: 0,
     });
   }
 
-  return info;
+  return pointSet;
 };
 
-export { circularPointSet, spreadPointSet };
+const gridPointSet = (
+  length: number,
+  column: number,
+  pointWidth: number,
+  pointHeight: number
+): PointSet => {
+  const GAP = 0.1;
+  const pointSet: PointSet = { position: [], rotation: [] };
+
+  const startX =
+    length < column
+      ? ((pointWidth + GAP) * (length - 1)) / 2
+      : ((pointWidth + GAP) * (column - 1)) / 2;
+  const startY =
+    length < column
+      ? 0
+      : ((pointHeight + GAP) * (Math.floor(length / column) - 1)) / 2;
+
+  for (let i = 0; i < length; i += 1) {
+    pointSet.position.push({
+      x: -startX + (i % column) * (pointWidth + GAP),
+      y: startY - Math.floor(i / column) * (pointHeight + GAP),
+      z: 0,
+    });
+    pointSet.rotation.push({
+      x: 0,
+      y: 0,
+      z: 0,
+    });
+  }
+
+  return pointSet;
+};
+
+export { circularPointSet, spreadPointSet, gridPointSet };

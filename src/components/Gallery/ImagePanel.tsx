@@ -24,15 +24,15 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
       geometry={geometry}
       initial={false}
       animate={{
-        x: pointSet.position[imageIndex].x,
-        y: pointSet.position[imageIndex].y,
-        z: pointSet.position[imageIndex].z,
-        rotateX: pointSet.rotation[imageIndex].x,
-        rotateY: pointSet.rotation[imageIndex].y,
-        rotateZ: pointSet.rotation[imageIndex].z,
+        x: pointSet.position[imageIndex]?.x,
+        y: pointSet.position[imageIndex]?.y,
+        z: pointSet.position[imageIndex]?.z,
+        rotateX: pointSet.rotation[imageIndex]?.x,
+        rotateY: pointSet.rotation[imageIndex]?.y,
+        rotateZ: pointSet.rotation[imageIndex]?.z,
       }}
       transition={{
-        duration: 0.8,
+        duration: 0.5,
       }}
     >
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />

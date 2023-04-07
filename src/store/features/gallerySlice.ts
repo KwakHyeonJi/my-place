@@ -17,7 +17,6 @@ export interface GalleryState {
   viewPointSet: Record<View, PointSet>;
   view: View;
   aspectRatio: { x: number; y: number };
-  reverse: boolean;
 }
 
 const initialState: GalleryState = {
@@ -28,7 +27,6 @@ const initialState: GalleryState = {
   },
   view: 'circular',
   aspectRatio: { x: 3, y: 4 },
-  reverse: false,
 };
 
 export const GallerySlice = createSlice({
@@ -54,12 +52,9 @@ export const GallerySlice = createSlice({
       state.aspectRatio.x = action.payload.x;
       state.aspectRatio.y = action.payload.y;
     },
-    toggleReverse: (state) => {
-      state.reverse = !state.reverse;
-    },
   },
 });
 
 export default GallerySlice.reducer;
-export const { setViewPointSet, setView, setAspectRatio, toggleReverse } =
+export const { setViewPointSet, setView, setAspectRatio } =
   GallerySlice.actions;

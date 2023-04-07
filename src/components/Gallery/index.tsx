@@ -1,16 +1,10 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useEffect } from 'react';
 import styled from 'styled-components';
-import * as THREE from 'three';
 
-import images from '@assets/images';
 import ChangeRatio from '@components/Gallery/ChangeRatio';
 import ChangeView from '@components/Gallery/ChangeView';
-import ImagePanel from '@components/Gallery/ImagePanel';
-import { circularPointSet, spreadPointSet } from '@components/Gallery/pointSet';
-import { setViewPointSet } from '@store/features/gallerySlice';
-import { useAppDispatch, useAppSelecter } from '@store/store';
+import GalleryView from '@components/Gallery/GalleryView';
 
 const GalleryLayout = styled.div`
   width: 100%;
@@ -18,52 +12,6 @@ const GalleryLayout = styled.div`
 `;
 
 const Gallery = () => {
-  const IMG_LENGTH = images.length; // number of images
-  const MAX_WIDTH = 1.2; // plane width
-  const MAX_WIDTH_REVERSE = 2.4; // plane width (reverse)
-  const RADIUS = 2.5; // circle
-  const GAP = 1.1; // between planes
-
-  const { view, aspectRatio, reverse } = useAppSelecter(
-    (state) => state.gallery
-  );
-  const dispatch = useAppDispatch();
-
-  const ratio = aspectRatio.x / aspectRatio.y;
-  const planeWidth = Math.min(
-    (2 * Math.PI * RADIUS) / (IMG_LENGTH * GAP),
-    reverse ? MAX_WIDTH_REVERSE : MAX_WIDTH
-  );
-
-  const planeGeometry = reverse
-    ? new THREE.PlaneGeometry(planeWidth * ratio, planeWidth)
-    : new THREE.PlaneGeometry(planeWidth, planeWidth / ratio);
-  planeGeometry.rotateY(Math.PI);
-
-  if (reverse) {
-    planeGeometry.rotateZ(Math.PI / 2);
-  }
-
-  useEffect(() => {
-    dispatch(
-      setViewPointSet({
-        view: 'circular',
-        pointSet: circularPointSet(IMG_LENGTH, RADIUS),
-      })
-    );
-  }, []);
-
-  useEffect(() => {
-    if (view === 'spread') {
-      dispatch(
-        setViewPointSet({
-          view: 'spread',
-          pointSet: spreadPointSet(IMG_LENGTH, 5, 2, 5),
-        })
-      );
-    }
-  }, [view]);
-
   return (
     <GalleryLayout>
       <Canvas>
@@ -71,17 +19,9 @@ const Gallery = () => {
         <OrbitControls
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
+          enableZoom={false}
         />
-        {Array(IMG_LENGTH)
-          .fill(undefined)
-          .map((_, i) => (
-            <ImagePanel
-              key={images[i]}
-              geometry={planeGeometry}
-              imageSrc={images[i]}
-              imageIndex={i}
-            />
-          ))}
+        <GalleryView />
       </Canvas>
       <ChangeView />
       <ChangeRatio />
