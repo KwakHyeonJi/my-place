@@ -10,6 +10,7 @@ import {
   spreadPointSet,
   gridPointSet,
 } from '@components/Gallery/pointSet';
+import useDrag from '@hooks/useDrag';
 import { setViewPointSet } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
@@ -19,6 +20,7 @@ const GalleryView = () => {
 
   const [galleryImages, setGalleryImages] = useState<string[]>(images);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const isDragging = useDrag();
 
   const { view, aspectRatio } = useAppSelecter((state) => state.gallery);
   const mode = useAppSelecter((state) => state.gallery.mode);
@@ -45,7 +47,12 @@ const GalleryView = () => {
   };
 
   const handleChangeImage = (e: THREE.Event) => {
-    if (groupRef.current && inputRef.current && mode === 'changeImage') {
+    if (
+      groupRef.current &&
+      inputRef.current &&
+      mode === 'changeImage' &&
+      !isDragging
+    ) {
       setSelectedImage(getSeletedObject(groupRef.current.children, e));
       inputRef.current.click();
     }
