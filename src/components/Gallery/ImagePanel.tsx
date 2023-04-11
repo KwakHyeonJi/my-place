@@ -22,6 +22,7 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
     <motion.mesh
       ref={ref}
       geometry={geometry}
+      name={String(imageIndex)}
       initial={false}
       animate={{
         x: pointSet.position[imageIndex]?.x,

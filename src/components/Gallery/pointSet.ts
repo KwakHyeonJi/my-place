@@ -2,10 +2,12 @@ import * as THREE from 'three';
 
 import { PointSet } from '@store/features/gallerySlice';
 
-const circularPointSet = (length: number, radius: number): PointSet => {
+const circularPointSet = (length: number, pointWidth: number): PointSet => {
+  const GAP = 0.1;
   const pointSet: PointSet = { position: [], rotation: [] };
   const object = new THREE.Object3D();
 
+  const radius = ((pointWidth + GAP) * length) / (2 * Math.PI);
   const theta = (2 * Math.PI) / length;
   const thetaStart = Math.PI / 2;
 
