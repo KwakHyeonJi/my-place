@@ -9,7 +9,6 @@ const ChangeImageButton = styled.button<{ active: boolean }>`
     active ? theme.color.black : '#ececec'};
   color: ${({ active, theme }) =>
     active ? theme.color.white : theme.color.black};
-  transition: 0.1s ease;
 `;
 
 const ChangeImage = () => {

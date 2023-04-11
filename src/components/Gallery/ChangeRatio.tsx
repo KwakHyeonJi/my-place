@@ -48,12 +48,10 @@ const ChangeRatioBox = styled.div`
 `;
 
 const ChangeRatioButton = styled.button<{ active: boolean }>`
-  transform: ${({ active }) => (active ? 'rotate(90deg)' : '')};
   background: ${({ active, theme }) =>
     active ? theme.color.black : '#ececec'};
   color: ${({ active, theme }) =>
     active ? theme.color.white : theme.color.black};
-  transition: 0.1s ease;
 `;
 
 const ratios = [
