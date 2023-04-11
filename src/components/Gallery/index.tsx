@@ -2,9 +2,9 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import styled from 'styled-components';
 
-import ChangeRatio from '@components/Gallery/ChangeRatio';
 import ChangeView from '@components/Gallery/ChangeView';
 import GalleryView from '@components/Gallery/GalleryView';
+import Setting from '@components/Gallery/Setting';
 
 const GalleryLayout = styled.div`
   width: 100%;
@@ -24,7 +24,7 @@ const Gallery = () => {
         <GalleryView />
       </Canvas>
       <ChangeView />
-      <ChangeRatio />
+      <Setting />
     </GalleryLayout>
   );
 };

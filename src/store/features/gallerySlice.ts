@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type View = 'circular' | 'spread' | 'grid';
+export type Mode = 'default' | 'changeImage';
 
 export interface Coord {
   x: number;
@@ -17,6 +18,7 @@ export interface GalleryState {
   viewPointSet: Record<View, PointSet>;
   view: View;
   aspectRatio: { x: number; y: number };
+  mode: Mode;
 }
 
 const initialState: GalleryState = {
@@ -27,6 +29,7 @@ const initialState: GalleryState = {
   },
   view: 'circular',
   aspectRatio: { x: 3, y: 4 },
+  mode: 'default',
 };
 
 export const GallerySlice = createSlice({
@@ -52,9 +55,12 @@ export const GallerySlice = createSlice({
       state.aspectRatio.x = action.payload.x;
       state.aspectRatio.y = action.payload.y;
     },
+    setMode: (state, action: PayloadAction<{ mode: Mode }>) => {
+      state.mode = action.payload.mode;
+    },
   },
 });
 
 export default GallerySlice.reducer;
-export const { setViewPointSet, setView, setAspectRatio } =
+export const { setViewPointSet, setView, setAspectRatio, setMode } =
   GallerySlice.actions;

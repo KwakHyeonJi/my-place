@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { IoMdResize } from 'react-icons/io';
 import styled from 'styled-components';
 
@@ -7,13 +7,9 @@ import RadioGroup from '@components/common/RadioGroup';
 import { setAspectRatio } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
-const ChangeRatioLayout = styled.div`
-  position: absolute;
-  top: 90px;
-  right: 30px;
-`;
-
 const ChangeRatioBox = styled.div`
+  position: absolute;
+  right: 0;
   padding: 20px 60px 20px 25px;
   border-radius: 30px;
   background: #ececec;
@@ -23,6 +19,7 @@ const ChangeRatioBox = styled.div`
   legend {
     padding: 0 0 5px 0;
     font-weight: 600;
+    white-space: nowrap;
   }
 
   label {
@@ -50,19 +47,12 @@ const ChangeRatioBox = styled.div`
   }
 `;
 
-const ChangeRatioButton = styled.button<{ open: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  transform: ${({ open }) => (open ? 'rotate(90deg)' : '')};
-  border-radius: 50%;
-  background: ${({ open, theme }) => (open ? theme.color.black : '#ececec')};
-  color: ${({ open, theme }) => (open ? theme.color.white : theme.color.black)};
+const ChangeRatioButton = styled.button<{ active: boolean }>`
+  transform: ${({ active }) => (active ? 'rotate(90deg)' : '')};
+  background: ${({ active, theme }) =>
+    active ? theme.color.black : '#ececec'};
+  color: ${({ active, theme }) =>
+    active ? theme.color.white : theme.color.black};
   transition: 0.1s ease;
 `;
 
@@ -73,6 +63,7 @@ const ratios = [
 ];
 
 const ChangeRatio = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const aspectRatio = useAppSelecter((state) => state.gallery.aspectRatio);
   const [open, setOpen] = useState(false);
 
@@ -84,12 +75,27 @@ const ChangeRatio = () => {
     dispatch(setAspectRatio({ x: Number(x), y: Number(y) }));
   };
 
-  const handleOpen = () => {
+  const handleToggleOpen = () => {
     setOpen(!open);
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (open && !ref.current?.contains(target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [open]);
+
   return (
-    <ChangeRatioLayout>
+    <div ref={ref}>
       {open && (
         <ChangeRatioBox>
           <RadioGroup
@@ -107,10 +113,14 @@ const ChangeRatio = () => {
           </RadioGroup>
         </ChangeRatioBox>
       )}
-      <ChangeRatioButton onClick={handleOpen} open={open}>
+      <ChangeRatioButton
+        className="setting-button"
+        onClick={handleToggleOpen}
+        active={open}
+      >
         <IoMdResize size={20} />
       </ChangeRatioButton>
-    </ChangeRatioLayout>
+    </div>
   );
 };
 
