@@ -1,9 +1,10 @@
+import { VIEWS, ViewValue } from '@constants/gallery';
 import React from 'react';
 import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
 import RadioGroup from '@components/common/RadioGroup';
-import { setView, View } from '@store/features/gallerySlice';
+import { setView } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
 const ChangeViewLayout = styled.div`
@@ -36,15 +37,13 @@ const ChangeViewLayout = styled.div`
   }
 `;
 
-const views: View[] = ['circular', 'spread', 'grid'];
-
 const ChangeView = () => {
   const currentView = useAppSelecter((state) => state.gallery.view);
   const dispatch = useAppDispatch();
 
   const handleChangeView = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
-    dispatch(setView({ view: target.value as View }));
+    dispatch(setView({ view: target.value as ViewValue }));
   };
 
   return (
@@ -55,7 +54,7 @@ const ChangeView = () => {
         value={currentView}
         onChange={handleChangeView}
       >
-        {views.map((view) => (
+        {Object.values(VIEWS).map((view) => (
           <Radio key={view} value={view}>
             {view}
           </Radio>

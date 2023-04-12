@@ -1,3 +1,4 @@
+import { MODES, VIEWS } from '@constants/gallery';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -49,7 +50,7 @@ const GalleryView = () => {
     if (
       groupRef.current &&
       inputRef.current &&
-      mode === 'changeImage' &&
+      mode === MODES.CHANGE_IMAGE &&
       !isDragging
     ) {
       setSelectedImage(getSeletedObject(groupRef.current.children, e));
@@ -60,17 +61,17 @@ const GalleryView = () => {
   useEffect(() => {
     dispatch(
       setViewPointSet({
-        view: 'circular',
+        view: VIEWS.CIRCULAR,
         pointSet: circularPointSet(images.length, planeWidth),
       })
     );
   }, []);
 
   useEffect(() => {
-    if (view === 'spread') {
+    if (view === VIEWS.SPREAD) {
       dispatch(
         setViewPointSet({
-          view: 'spread',
+          view,
           pointSet: spreadPointSet(images.length, 5, 2, 5),
         })
       );
@@ -78,10 +79,10 @@ const GalleryView = () => {
   }, [view]);
 
   useEffect(() => {
-    if (view === 'grid') {
+    if (view === VIEWS.GRID) {
       dispatch(
         setViewPointSet({
-          view: 'grid',
+          view,
           pointSet: gridPointSet(images.length, 4, planeWidth, planeHeight),
         })
       );

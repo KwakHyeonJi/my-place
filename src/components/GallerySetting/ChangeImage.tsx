@@ -1,3 +1,4 @@
+import { MODES } from '@constants/gallery';
 import { TbReplace } from 'react-icons/tb';
 import styled from 'styled-components';
 
@@ -16,7 +17,8 @@ const ChangeImage = () => {
   const dispatch = useAppDispatch();
 
   const handleToggleMode = () => {
-    const nextMode = mode === 'changeImage' ? 'default' : 'changeImage';
+    const nextMode =
+      mode === MODES.CHANGE_IMAGE ? MODES.DEFAULT : MODES.CHANGE_IMAGE;
     dispatch(setMode({ mode: nextMode }));
   };
 
@@ -24,7 +26,7 @@ const ChangeImage = () => {
     <ChangeImageButton
       className="setting-button"
       onClick={handleToggleMode}
-      active={mode === 'changeImage'}
+      active={mode === MODES.CHANGE_IMAGE}
     >
       <TbReplace size={20} />
     </ChangeImageButton>
