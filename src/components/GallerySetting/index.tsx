@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import ChangeImage from '@components/Gallery/ChangeImage';
-import ChangeRatio from '@components/Gallery/ChangeRatio';
+import ChangeImage from '@components/GallerySetting/ChangeImage';
+import ChangeRatio from '@components/GallerySetting/ChangeRatio';
 
-const SettingLayout = styled.section`
+const GallerySettingLayout = styled.section`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -22,13 +22,13 @@ const SettingLayout = styled.section`
   }
 `;
 
-const Setting = () => {
+const GallerySetting = () => {
   return (
-    <SettingLayout>
+    <GallerySettingLayout>
       <ChangeImage />
       <ChangeRatio />
-    </SettingLayout>
+    </GallerySettingLayout>
   );
 };
 
-export default Setting;
+export default GallerySetting;

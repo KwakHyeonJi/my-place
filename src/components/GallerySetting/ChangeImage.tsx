@@ -16,11 +16,8 @@ const ChangeImage = () => {
   const dispatch = useAppDispatch();
 
   const handleToggleMode = () => {
-    if (mode !== 'changeImage') {
-      dispatch(setMode({ mode: 'changeImage' }));
-    } else {
-      dispatch(setMode({ mode: 'default' }));
-    }
+    const nextMode = mode === 'changeImage' ? 'default' : 'changeImage';
+    dispatch(setMode({ mode: nextMode }));
   };
 
   return (

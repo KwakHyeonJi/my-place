@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import ChangeView from '@components/Gallery/ChangeView';
 import GalleryView from '@components/Gallery/GalleryView';
-import Setting from '@components/Gallery/Setting';
+import GallerySetting from '@components/GallerySetting';
 
 const GalleryLayout = styled.div`
   width: 100%;
@@ -15,7 +15,6 @@ const Gallery = () => {
   return (
     <GalleryLayout>
       <Canvas>
-        <ambientLight />
         <OrbitControls
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
@@ -24,7 +23,7 @@ const Gallery = () => {
         <GalleryView />
       </Canvas>
       <ChangeView />
-      <Setting />
+      <GallerySetting />
     </GalleryLayout>
   );
 };

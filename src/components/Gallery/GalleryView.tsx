@@ -1,32 +1,31 @@
-import { Html } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-import images from '@assets/images';
 import ImagePanel from '@components/Gallery/ImagePanel';
 import {
   circularPointSet,
   spreadPointSet,
   gridPointSet,
 } from '@components/Gallery/pointSet';
+import UploadImage from '@components/Gallery/UploadImage';
 import useDrag from '@hooks/useDrag';
 import { setViewPointSet } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
 const GalleryView = () => {
   const IMG_WIDTH = 1.2;
-  const IMG_MAX_SIZE = 1024 * 1024;
 
-  const [galleryImages, setGalleryImages] = useState<string[]>(images);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const isDragging = useDrag();
-
-  const { view, aspectRatio } = useAppSelecter((state) => state.gallery);
-  const mode = useAppSelecter((state) => state.gallery.mode);
-  const camera = useThree((state) => state.camera);
   const groupRef = useRef<THREE.Group | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const { images, view, aspectRatio, mode } = useAppSelecter(
+    (state) => state.gallery
+  );
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const camera = useThree((state) => state.camera);
+  const isDragging = useDrag();
+
   const dispatch = useAppDispatch();
 
   const planeWidth = IMG_WIDTH;
@@ -58,36 +57,11 @@ const GalleryView = () => {
     }
   };
 
-  const handleUploadImage = (e: React.SyntheticEvent) => {
-    const target = e.target as HTMLInputElement;
-    if (!target.files?.length) return;
-
-    const file = target.files[0];
-    if (file.size > IMG_MAX_SIZE) {
-      alert('1MB 이하의 파일만 업로드 가능합니다.');
-      return;
-    }
-    target.value = '';
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const { result } = reader;
-
-      setGalleryImages(
-        galleryImages.map((galleryImage, index) =>
-          selectedImage === String(index) ? String(result) : galleryImage
-        )
-      );
-      setSelectedImage(null);
-    };
-    reader.readAsDataURL(file);
-  };
-
   useEffect(() => {
     dispatch(
       setViewPointSet({
         view: 'circular',
-        pointSet: circularPointSet(galleryImages.length, planeWidth),
+        pointSet: circularPointSet(images.length, planeWidth),
       })
     );
   }, []);
@@ -97,7 +71,7 @@ const GalleryView = () => {
       dispatch(
         setViewPointSet({
           view: 'spread',
-          pointSet: spreadPointSet(galleryImages.length, 5, 2, 5),
+          pointSet: spreadPointSet(images.length, 5, 2, 5),
         })
       );
     }
@@ -108,12 +82,7 @@ const GalleryView = () => {
       dispatch(
         setViewPointSet({
           view: 'grid',
-          pointSet: gridPointSet(
-            galleryImages.length,
-            4,
-            planeWidth,
-            planeHeight
-          ),
+          pointSet: gridPointSet(images.length, 4, planeWidth, planeHeight),
         })
       );
     }
@@ -121,25 +90,17 @@ const GalleryView = () => {
 
   return (
     <group ref={groupRef} onClick={handleChangeImage}>
-      {Array(galleryImages.length)
+      {Array(images.length)
         .fill(undefined)
         .map((_, i) => (
           <ImagePanel
             key={i}
             geometry={planeGeometry}
-            imageSrc={galleryImages[i]}
+            imageSrc={images[i]}
             imageIndex={i}
           />
         ))}
-      <Html>
-        <input
-          type="file"
-          accept="image/*"
-          ref={inputRef}
-          onChange={handleUploadImage}
-          style={{ display: 'none' }}
-        />
-      </Html>
+      <UploadImage ref={inputRef} selectedImage={Number(selectedImage)} />
     </group>
   );
 };

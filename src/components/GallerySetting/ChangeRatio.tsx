@@ -62,6 +62,7 @@ const ratios = [
 
 const ChangeRatio = () => {
   const ref = useRef<HTMLDivElement | null>(null);
+
   const aspectRatio = useAppSelecter((state) => state.gallery.aspectRatio);
   const [open, setOpen] = useState(false);
 

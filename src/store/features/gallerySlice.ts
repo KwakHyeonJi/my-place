@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import images from '@assets/images';
+
 export type View = 'circular' | 'spread' | 'grid';
 export type Mode = 'default' | 'changeImage';
 
@@ -15,6 +17,7 @@ export interface PointSet {
 }
 
 export interface GalleryState {
+  images: string[];
   viewPointSet: Record<View, PointSet>;
   view: View;
   aspectRatio: { x: number; y: number };
@@ -22,6 +25,7 @@ export interface GalleryState {
 }
 
 const initialState: GalleryState = {
+  images,
   viewPointSet: {
     circular: { position: [], rotation: [] },
     spread: { position: [], rotation: [] },
@@ -36,6 +40,12 @@ export const GallerySlice = createSlice({
   name: 'gallery',
   initialState,
   reducers: {
+    changeImage: (
+      state,
+      action: PayloadAction<{ index: number; image: string }>
+    ) => {
+      state.images[action.payload.index] = action.payload.image;
+    },
     setViewPointSet: (
       state,
       action: PayloadAction<{
@@ -62,5 +72,10 @@ export const GallerySlice = createSlice({
 });
 
 export default GallerySlice.reducer;
-export const { setViewPointSet, setView, setAspectRatio, setMode } =
-  GallerySlice.actions;
+export const {
+  changeImage,
+  setViewPointSet,
+  setView,
+  setAspectRatio,
+  setMode,
+} = GallerySlice.actions;
