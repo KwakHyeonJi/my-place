@@ -1,4 +1,3 @@
-import { MODES, VIEWS } from '@constants/gallery';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -10,6 +9,7 @@ import {
   gridPointSet,
 } from '@components/Gallery/pointSet';
 import UploadImage from '@components/Gallery/UploadImage';
+import { MODES, VIEWS } from '@constants/gallery';
 import useDrag from '@hooks/useDrag';
 import { setViewPointSet } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
@@ -101,7 +101,7 @@ const GalleryView = () => {
             imageIndex={i}
           />
         ))}
-      <UploadImage ref={inputRef} selectedImage={Number(selectedImage)} />
+      <UploadImage ref={inputRef} selectedImage={selectedImage} />
     </group>
   );
 };

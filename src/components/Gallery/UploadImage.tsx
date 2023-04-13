@@ -5,7 +5,7 @@ import { changeImage } from '@store/features/gallerySlice';
 import { useAppDispatch } from '@store/store';
 
 interface UploadImageProps {
-  selectedImage: number;
+  selectedImage: string;
 }
 
 const UploadImage = forwardRef(
@@ -27,7 +27,7 @@ const UploadImage = forwardRef(
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
-        dispatch(changeImage({ index: selectedImage, image: result }));
+        dispatch(changeImage({ index: Number(selectedImage), image: result }));
       };
       reader.readAsDataURL(file);
     };

@@ -1,7 +1,7 @@
-import { ViewValue, ModeValue, VIEWS, MODES } from '@constants/gallery';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import images from '@assets/images';
+import { ViewValue, ModeValue, VIEWS, MODES } from '@constants/gallery';
 
 export interface Coord {
   x: number;
