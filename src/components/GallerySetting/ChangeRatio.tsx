@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { IoMdResize } from 'react-icons/io';
 import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
 import RadioGroup from '@components/common/RadioGroup';
+import useButton from '@hooks/useButton';
 import { setAspectRatio } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
@@ -64,7 +65,7 @@ const ChangeRatio = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const aspectRatio = useAppSelecter((state) => state.gallery.aspectRatio);
-  const [open, setOpen] = useState(false);
+  const { isClicked, handleToggle } = useButton(ref.current);
 
   const dispatch = useAppDispatch();
 
@@ -74,28 +75,9 @@ const ChangeRatio = () => {
     dispatch(setAspectRatio({ x: Number(x), y: Number(y) }));
   };
 
-  const handleToggleOpen = () => {
-    setOpen(!open);
-  };
-
-  useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (open && !ref.current?.contains(target)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, [open]);
-
   return (
     <div ref={ref}>
-      {open && (
+      {isClicked && (
         <ChangeRatioBox>
           <RadioGroup
             label="Aspect ratio"
@@ -114,8 +96,8 @@ const ChangeRatio = () => {
       )}
       <ChangeRatioButton
         className="setting-button"
-        onClick={handleToggleOpen}
-        active={open}
+        onClick={handleToggle}
+        active={isClicked}
       >
         <IoMdResize size={20} />
       </ChangeRatioButton>
