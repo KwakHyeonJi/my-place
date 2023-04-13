@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import images from '@assets/images';
 import { ViewValue, ModeValue, VIEWS, MODES } from '@constants/gallery';
 
 export interface Coord {
@@ -23,7 +22,7 @@ export interface GalleryState {
 }
 
 const initialState: GalleryState = {
-  images,
+  images: [],
   viewPointSet: {
     circular: { position: [], rotation: [] },
     spread: { position: [], rotation: [] },
@@ -38,6 +37,9 @@ export const GallerySlice = createSlice({
   name: 'gallery',
   initialState,
   reducers: {
+    setImages: (state, action: PayloadAction<{ images: string[] }>) => {
+      state.images = action.payload.images;
+    },
     changeImage: (
       state,
       action: PayloadAction<{ index: number; image: string }>
@@ -71,6 +73,7 @@ export const GallerySlice = createSlice({
 
 export default GallerySlice.reducer;
 export const {
+  setImages,
   changeImage,
   setViewPointSet,
   setView,

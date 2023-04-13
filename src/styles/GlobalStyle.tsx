@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background: #fafafa;
     font-family: 'Poppins', sans-serif;
+    user-select: none;
   }
 
   li {

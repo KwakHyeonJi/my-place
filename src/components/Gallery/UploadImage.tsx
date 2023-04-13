@@ -5,12 +5,13 @@ import { changeImage } from '@store/features/gallerySlice';
 import { useAppDispatch } from '@store/store';
 
 interface UploadImageProps {
-  selectedImage: string;
+  imageIndex: number;
 }
 
 const UploadImage = forwardRef(
-  ({ selectedImage }: UploadImageProps, ref: React.Ref<HTMLInputElement>) => {
+  ({ imageIndex }: UploadImageProps, ref: React.Ref<HTMLInputElement>) => {
     const IMG_MAX_SIZE = 1024 * 1024;
+
     const dispatch = useAppDispatch();
 
     const handleUploadImage = (e: React.SyntheticEvent) => {
@@ -27,10 +28,11 @@ const UploadImage = forwardRef(
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
-        dispatch(changeImage({ index: Number(selectedImage), image: result }));
+        dispatch(changeImage({ index: imageIndex, image: result }));
       };
       reader.readAsDataURL(file);
     };
+
     return (
       <Html>
         <input

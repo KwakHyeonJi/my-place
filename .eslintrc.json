@@ -58,7 +58,8 @@
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/label-has-associated-control": ["error", {}],
     "react/no-array-index-key": ["warn"],
-    "no-param-reassign": ["warn"]
+    "no-param-reassign": ["warn"],
+    "import/prefer-default-export": "off"
   },
   "ignorePatterns": ["dist", "public", "webpack.config.js"]
 }

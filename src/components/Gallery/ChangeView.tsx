@@ -1,9 +1,9 @@
-import { VIEWS, ViewValue } from '@constants/gallery';
 import React from 'react';
 import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
 import RadioGroup from '@components/common/RadioGroup';
+import { VIEWS, ViewValue } from '@constants/gallery';
 import { setView } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 

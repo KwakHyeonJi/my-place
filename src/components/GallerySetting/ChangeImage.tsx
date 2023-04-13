@@ -1,7 +1,7 @@
-import { MODES } from '@constants/gallery';
 import { TbReplace } from 'react-icons/tb';
 import styled from 'styled-components';
 
+import { MODES } from '@constants/gallery';
 import { setMode } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
