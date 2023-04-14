@@ -8,7 +8,7 @@ import {
   spreadPointSet,
   gridPointSet,
 } from '@components/Gallery/pointSet';
-import { VIEWS } from '@constants/gallery';
+import { radios, VIEWS } from '@constants/gallery';
 import { setImages, setViewPointSet } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
@@ -22,7 +22,8 @@ const GalleryView = () => {
   const dispatch = useAppDispatch();
 
   const planeWidth = IMG_WIDTH;
-  const planeHeight = (planeWidth * aspectRatio.y) / aspectRatio.x;
+  const planeHeight =
+    (planeWidth * radios[aspectRatio][1]) / radios[aspectRatio][0];
   const planeGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const GalleryView = () => {
         pointSet: circularPointSet(images.length, planeWidth),
       })
     );
-  }, [images]);
+  }, [images.length]);
 
   useEffect(() => {
     if (view === VIEWS.SPREAD) {

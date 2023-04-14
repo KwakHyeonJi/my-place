@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Radio from '@components/common/Radio';
 import RadioGroup from '@components/common/RadioGroup';
+import { radios, RatioName } from '@constants/gallery';
 import useButton from '@hooks/useButton';
 import { setAspectRatio } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
@@ -55,12 +56,6 @@ const ChangeRatioButton = styled.button<{ active: boolean }>`
     active ? theme.color.white : theme.color.black};
 `;
 
-const ratios = [
-  [3, 4],
-  [9, 16],
-  [1, 1],
-];
-
 const ChangeRatio = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -71,8 +66,7 @@ const ChangeRatio = () => {
 
   const handleChangeRatio = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
-    const [x, y] = target.value.split(':');
-    dispatch(setAspectRatio({ x: Number(x), y: Number(y) }));
+    dispatch(setAspectRatio({ ratio: target.value as RatioName }));
   };
 
   return (
@@ -82,13 +76,13 @@ const ChangeRatio = () => {
           <RadioGroup
             label="Aspect ratio"
             name="aspect ratio"
-            value={`${aspectRatio.x}:${aspectRatio.y}`}
+            value={aspectRatio}
             onChange={handleChangeRatio}
           >
-            {ratios.map((ratio) => (
+            {Object.entries(radios).map(([name, ratio]) => (
               <Radio
-                key={`${ratio[0]}:${ratio[1]}`}
-                value={`${ratio[0]}:${ratio[1]}`}
+                key={name}
+                value={name}
               >{`${ratio[0]} : ${ratio[1]}`}</Radio>
             ))}
           </RadioGroup>

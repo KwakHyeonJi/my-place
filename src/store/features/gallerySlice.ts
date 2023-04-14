@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ViewValue, ModeValue, VIEWS, MODES } from '@constants/gallery';
+import {
+  VIEWS,
+  ViewValue,
+  MODES,
+  ModeValue,
+  RatioName,
+} from '@constants/gallery';
 
 export interface Coord {
   x: number;
@@ -17,7 +23,7 @@ export interface GalleryState {
   images: string[];
   viewPointSet: Record<ViewValue, PointSet>;
   view: ViewValue;
-  aspectRatio: { x: number; y: number };
+  aspectRatio: RatioName;
   mode: ModeValue;
 }
 
@@ -29,7 +35,7 @@ const initialState: GalleryState = {
     grid: { position: [], rotation: [] },
   },
   view: VIEWS.CIRCULAR,
-  aspectRatio: { x: 3, y: 4 },
+  aspectRatio: 'A',
   mode: MODES.DEFAULT,
 };
 
@@ -58,12 +64,8 @@ export const GallerySlice = createSlice({
     setView: (state, action: PayloadAction<{ view: ViewValue }>) => {
       state.view = action.payload.view;
     },
-    setAspectRatio: (
-      state,
-      action: PayloadAction<{ x: number; y: number }>
-    ) => {
-      state.aspectRatio.x = action.payload.x;
-      state.aspectRatio.y = action.payload.y;
+    setAspectRatio: (state, action: PayloadAction<{ ratio: RatioName }>) => {
+      state.aspectRatio = action.payload.ratio;
     },
     setMode: (state, action: PayloadAction<{ mode: ModeValue }>) => {
       state.mode = action.payload.mode;
