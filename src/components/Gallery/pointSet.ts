@@ -74,7 +74,7 @@ const gridPointSet = (
   const startY =
     length < column
       ? 0
-      : ((pointHeight + GAP) * (Math.floor(length / column) - 1)) / 2;
+      : ((pointHeight + GAP) * (Math.ceil(length / column) - 1)) / 2;
 
   for (let i = 0; i < length; i += 1) {
     pointSet.position.push({

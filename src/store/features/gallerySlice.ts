@@ -52,6 +52,9 @@ export const GallerySlice = createSlice({
     ) => {
       state.images[action.payload.index] = action.payload.image;
     },
+    deleteImage: (state, action: PayloadAction<{ index: number }>) => {
+      state.images.splice(action.payload.index, 1);
+    },
     setViewPointSet: (
       state,
       action: PayloadAction<{
@@ -77,6 +80,7 @@ export default GallerySlice.reducer;
 export const {
   setImages,
   changeImage,
+  deleteImage,
   setViewPointSet,
   setView,
   setAspectRatio,

@@ -1,12 +1,14 @@
 import { useTexture } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import * as THREE from 'three';
 
 import ImagePanelButtons from '@components/Gallery/ImagePanelButtons';
 import UploadImage from '@components/Gallery/UploadImage';
 import { MODES } from '@constants/gallery';
 import useButton from '@hooks/useButton';
+import { deleteImage } from '@store/features/gallerySlice';
 import { useAppSelecter } from '@store/store';
 
 interface ImagePanelProps {
@@ -21,6 +23,8 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
   const view = useAppSelecter((state) => state.gallery.view);
   const pointSet = useAppSelecter((state) => state.gallery.viewPointSet[view]);
   const mode = useAppSelecter((state) => state.gallery.mode);
+
+  const dispatch = useDispatch();
   const texture = useTexture(imageSrc);
   const { isClicked, handleClick } = useButton(null);
 
@@ -48,6 +52,10 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
 
   const handleChangeImage = () => {
     inputRef.current?.click();
+  };
+
+  const handleDeleteImage = () => {
+    dispatch(deleteImage({ index: imageIndex }));
   };
 
   return (
@@ -80,6 +88,7 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
           y={y}
           z={z}
           handleChangeImage={handleChangeImage}
+          handleDeleteImage={handleDeleteImage}
         />
       )}
       <UploadImage ref={inputRef} imageIndex={imageIndex} />

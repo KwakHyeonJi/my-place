@@ -37,6 +37,7 @@ interface ImagePanelButtonsProps {
   y: number;
   z: number;
   handleChangeImage: () => void;
+  handleDeleteImage: () => void;
 }
 
 const ImagePanelButtons = ({
@@ -44,6 +45,7 @@ const ImagePanelButtons = ({
   y,
   z,
   handleChangeImage,
+  handleDeleteImage,
 }: ImagePanelButtonsProps) => {
   const camera = useThree((state) => state.camera);
 
@@ -58,7 +60,9 @@ const ImagePanelButtons = ({
         <button type="button" onClick={handleChangeImage}>
           Change
         </button>
-        <button type="button">Delete</button>
+        <button type="button" onClick={handleDeleteImage}>
+          Delete
+        </button>
       </ImagePanelButtonsLayout>
     </Html>
   );

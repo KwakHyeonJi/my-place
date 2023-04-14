@@ -59,7 +59,7 @@ const GalleryView = () => {
         })
       );
     }
-  }, [view, aspectRatio]);
+  }, [images.length, view, aspectRatio]);
 
   return (
     <group>
