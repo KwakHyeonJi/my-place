@@ -1,4 +1,5 @@
 import { Html } from '@react-three/drei';
+import imageCompression from 'browser-image-compression';
 import { forwardRef } from 'react';
 
 import { changeImage } from '@store/features/gallerySlice';
@@ -10,27 +11,35 @@ interface UploadImageProps {
 
 const UploadImage = forwardRef(
   ({ imageIndex }: UploadImageProps, ref: React.Ref<HTMLInputElement>) => {
-    const IMG_MAX_SIZE = 1024 * 1024 * 2;
-
     const dispatch = useAppDispatch();
 
-    const handleUploadImage = (e: React.SyntheticEvent) => {
+    const compressImage = async (image: File) => {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+
+      const compressedBlob = await imageCompression(image, options);
+      const compressedImage = new File([compressedBlob], image.name, {
+        type: image.type,
+      });
+      return compressedImage;
+    };
+
+    const handleUploadImage = async (e: React.SyntheticEvent) => {
       const target = e.target as HTMLInputElement;
       if (!target.files?.length) return;
 
-      const file = target.files[0];
-      if (file.size > IMG_MAX_SIZE) {
-        alert('2MB 이하의 파일만 업로드 가능합니다.');
-        return;
-      }
-      target.value = '';
+      const compressedImage = compressImage(target.files[0]);
 
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
         dispatch(changeImage({ index: imageIndex, image: result }));
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(await compressedImage);
+      target.value = '';
     };
 
     return (
