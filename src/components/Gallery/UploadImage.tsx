@@ -10,7 +10,7 @@ interface UploadImageProps {
 
 const UploadImage = forwardRef(
   ({ imageIndex }: UploadImageProps, ref: React.Ref<HTMLInputElement>) => {
-    const IMG_MAX_SIZE = 1024 * 1024;
+    const IMG_MAX_SIZE = 1024 * 1024 * 2;
 
     const dispatch = useAppDispatch();
 
@@ -20,7 +20,7 @@ const UploadImage = forwardRef(
 
       const file = target.files[0];
       if (file.size > IMG_MAX_SIZE) {
-        alert('1MB 이하의 파일만 업로드 가능합니다.');
+        alert('2MB 이하의 파일만 업로드 가능합니다.');
         return;
       }
       target.value = '';
@@ -38,7 +38,6 @@ const UploadImage = forwardRef(
         <input
           type="file"
           accept="image/*"
-          capture="user"
           ref={ref}
           onChange={handleUploadImage}
           style={{ display: 'none' }}
