@@ -31,5 +31,6 @@ A place where various works can be displayed in various ways
 ## 😂 What to fix
 - Rotate another image when deleting an image
 - Screen flickers when replacing a new image
+- Image panel size is reduced when deleting an image
 - [Mobile] Background music stops when launch the camera app and return to screen
 - [Mobile] Screen optimization
