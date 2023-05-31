@@ -3,8 +3,10 @@ import { Canvas } from '@react-three/fiber';
 import styled from 'styled-components';
 
 import ChangeView from '@components/Gallery/ChangeView';
+import EditModeButton from '@components/Gallery/EditModeButton';
 import GalleryView from '@components/Gallery/GalleryView';
-import GallerySetting from '@components/GallerySetting';
+import { MODES } from '@store/features/gallerySlice';
+import { useAppSelecter } from '@store/store';
 
 const GalleryLayout = styled.div`
   width: 100%;
@@ -12,18 +14,21 @@ const GalleryLayout = styled.div`
 `;
 
 const Gallery = () => {
+  const mode = useAppSelecter((state) => state.gallery.mode);
   return (
     <GalleryLayout>
       <Canvas>
-        <OrbitControls
-          minPolarAngle={Math.PI / 2}
-          maxPolarAngle={Math.PI / 2}
-          enableZoom={false}
-        />
+        {mode === MODES.DEFAULT && (
+          <OrbitControls
+            minPolarAngle={Math.PI / 2}
+            maxPolarAngle={Math.PI / 2}
+            enableZoom={false}
+          />
+        )}
         <GalleryView />
       </Canvas>
       <ChangeView />
-      <GallerySetting />
+      <EditModeButton />
     </GalleryLayout>
   );
 };

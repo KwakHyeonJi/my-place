@@ -3,63 +3,42 @@ import * as THREE from 'three';
 
 import sampleImages from '@assets/images';
 import ImagePanel from '@components/Gallery/ImagePanel';
-import {
-  circularPointSet,
-  spreadPointSet,
-  gridPointSet,
-} from '@components/Gallery/pointSet';
-import { radios, VIEWS } from '@constants/gallery';
-import { setImages, setViewPointSet } from '@store/features/gallerySlice';
+import { VIEWS, setImages, setPoints } from '@store/features/gallerySlice';
 import { useAppDispatch, useAppSelecter } from '@store/store';
 
+import { ViewPointSet } from '../../utils/viewPointSet';
+
+const IMG_WIDTH = 1.2;
+const IMG_HEIGHT = IMG_WIDTH * Math.sqrt(2);
+const IMG_GAP = 0.1;
+const IMG_COLUMN = 4;
+
 const GalleryView = () => {
-  const IMG_WIDTH = 1.2;
+  const planeGeometry = new THREE.PlaneGeometry(IMG_WIDTH, IMG_HEIGHT);
 
-  const { images, view, aspectRatio } = useAppSelecter(
-    (state) => state.gallery
-  );
-
+  const images = useAppSelecter((state) => state.gallery.images);
   const dispatch = useAppDispatch();
-
-  const planeWidth = IMG_WIDTH;
-  const planeHeight =
-    (planeWidth * radios[aspectRatio][1]) / radios[aspectRatio][0];
-  const planeGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
 
   useEffect(() => {
     dispatch(setImages({ images: sampleImages }));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
+    const viewPointSet = new ViewPointSet(IMG_WIDTH, IMG_HEIGHT, IMG_GAP);
+
     dispatch(
-      setViewPointSet({
+      setPoints({
         view: VIEWS.CIRCULAR,
-        pointSet: circularPointSet(images.length, planeWidth),
+        pointSet: viewPointSet.circular(images.length),
       })
     );
-  }, [images.length]);
-
-  useEffect(() => {
-    if (view === VIEWS.SPREAD) {
-      dispatch(
-        setViewPointSet({
-          view,
-          pointSet: spreadPointSet(images.length, 5, 2, 5),
-        })
-      );
-    }
-  }, [view]);
-
-  useEffect(() => {
-    if (view === VIEWS.GRID) {
-      dispatch(
-        setViewPointSet({
-          view,
-          pointSet: gridPointSet(images.length, 4, planeWidth, planeHeight),
-        })
-      );
-    }
-  }, [images.length, view, aspectRatio]);
+    dispatch(
+      setPoints({
+        view: VIEWS.GRID,
+        pointSet: viewPointSet.grid(images.length, IMG_COLUMN),
+      })
+    );
+  }, [dispatch, images.length]);
 
   return (
     <group>

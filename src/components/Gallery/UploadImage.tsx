@@ -2,7 +2,7 @@ import { Html } from '@react-three/drei';
 import imageCompression from 'browser-image-compression';
 import { forwardRef } from 'react';
 
-import { changeImage } from '@store/features/gallerySlice';
+import { replaceImage } from '@store/features/gallerySlice';
 import { useAppDispatch } from '@store/store';
 
 interface UploadImageProps {
@@ -36,7 +36,7 @@ const UploadImage = forwardRef(
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
-        dispatch(changeImage({ index: imageIndex, image: result }));
+        dispatch(replaceImage({ index: imageIndex, image: result }));
       };
       reader.readAsDataURL(await compressedImage);
       target.value = '';

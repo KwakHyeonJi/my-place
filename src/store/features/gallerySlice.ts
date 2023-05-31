@@ -1,41 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  VIEWS,
-  ViewValue,
-  MODES,
-  ModeValue,
-  RatioName,
-} from '@constants/gallery';
+import { PointSet } from '@utils/viewPointSet';
 
-export interface Coord {
-  x: number;
-  y: number;
-  z: number;
+export enum VIEWS {
+  CIRCULAR = 'circular',
+  GRID = 'grid',
 }
 
-export interface PointSet {
-  position: Coord[];
-  rotation: Coord[];
+export enum MODES {
+  DEFAULT = 'DEFAULT',
+  EDIT = 'EDIT',
 }
 
 export interface GalleryState {
   images: string[];
-  viewPointSet: Record<ViewValue, PointSet>;
-  view: ViewValue;
-  aspectRatio: RatioName;
-  mode: ModeValue;
+  mode: MODES;
+  view: VIEWS;
+  viewPointSet: Record<VIEWS, PointSet>;
 }
 
 const initialState: GalleryState = {
   images: [],
   viewPointSet: {
     circular: { position: [], rotation: [] },
-    spread: { position: [], rotation: [] },
     grid: { position: [], rotation: [] },
   },
   view: VIEWS.CIRCULAR,
-  aspectRatio: 'A',
   mode: MODES.DEFAULT,
 };
 
@@ -43,10 +33,25 @@ export const GallerySlice = createSlice({
   name: 'gallery',
   initialState,
   reducers: {
+    changeMode: (state, action: PayloadAction<{ mode: MODES }>) => {
+      state.mode = action.payload.mode;
+    },
+    changeView: (state, action: PayloadAction<{ view: VIEWS }>) => {
+      state.view = action.payload.view;
+    },
+    setPoints: (
+      state,
+      action: PayloadAction<{
+        view: VIEWS;
+        pointSet: PointSet;
+      }>
+    ) => {
+      state.viewPointSet[action.payload.view] = action.payload.pointSet;
+    },
     setImages: (state, action: PayloadAction<{ images: string[] }>) => {
       state.images = action.payload.images;
     },
-    changeImage: (
+    replaceImage: (
       state,
       action: PayloadAction<{ index: number; image: string }>
     ) => {
@@ -55,34 +60,15 @@ export const GallerySlice = createSlice({
     deleteImage: (state, action: PayloadAction<{ index: number }>) => {
       state.images.splice(action.payload.index, 1);
     },
-    setViewPointSet: (
-      state,
-      action: PayloadAction<{
-        view: ViewValue;
-        pointSet: PointSet;
-      }>
-    ) => {
-      state.viewPointSet[action.payload.view] = action.payload.pointSet;
-    },
-    setView: (state, action: PayloadAction<{ view: ViewValue }>) => {
-      state.view = action.payload.view;
-    },
-    setAspectRatio: (state, action: PayloadAction<{ ratio: RatioName }>) => {
-      state.aspectRatio = action.payload.ratio;
-    },
-    setMode: (state, action: PayloadAction<{ mode: ModeValue }>) => {
-      state.mode = action.payload.mode;
-    },
   },
 });
 
 export default GallerySlice.reducer;
 export const {
+  changeMode,
+  changeView,
+  setPoints,
   setImages,
-  changeImage,
+  replaceImage,
   deleteImage,
-  setViewPointSet,
-  setView,
-  setAspectRatio,
-  setMode,
 } = GallerySlice.actions;

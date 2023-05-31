@@ -6,9 +6,8 @@ import * as THREE from 'three';
 
 import ImagePanelButtons from '@components/Gallery/ImagePanelButtons';
 import UploadImage from '@components/Gallery/UploadImage';
-import { MODES } from '@constants/gallery';
 import useButton from '@hooks/useButton';
-import { deleteImage } from '@store/features/gallerySlice';
+import { MODES, deleteImage } from '@store/features/gallerySlice';
 import { useAppSelecter } from '@store/store';
 
 interface ImagePanelProps {
@@ -33,19 +32,19 @@ const ImagePanel = ({ geometry, imageSrc, imageIndex }: ImagePanelProps) => {
   const z = pointSet.position[imageIndex]?.z;
 
   const handlePointerOver = (e: THREE.Event) => {
-    if (mode !== MODES.CHANGE_IMAGE) return;
+    if (mode !== MODES.EDIT) return;
     e.stopPropagation();
     e.nativeEvent.target.style.cursor = 'pointer';
   };
 
   const handlePointerOut = (e: THREE.Event) => {
-    if (mode !== MODES.CHANGE_IMAGE) return;
+    if (mode !== MODES.EDIT) return;
     e.stopPropagation();
     e.nativeEvent.target.style.cursor = 'default';
   };
 
   const handleShowButtons = (e: THREE.Event) => {
-    if (mode !== MODES.CHANGE_IMAGE) return;
+    if (mode !== MODES.EDIT) return;
     e.stopPropagation();
     handleClick();
   };
