@@ -8,11 +8,9 @@ A place where various works can be displayed in various ways
 
 ## ⚙ Features
 - Circular view
-- Spread view
 - Grid view
 - Replace with custom images using edit mode
 - Delete image
-- Change aspect ratio
 - Background music
 
 ## 💡 What to add
